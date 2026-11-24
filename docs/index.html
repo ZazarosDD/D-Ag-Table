@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Das interaktive Periodensystem für Klasse 7 bis 13. Entdecke Elemente, ihre Eigenschaften und wichtige Verbindungen in Alltag und Technik.">
+  <title>D[Ag] Table</title>
+  <link rel="icon" href="assets/elementatlas.svg" type="image/svg+xml">
+  <link rel="preload" as="image" href="assets/fluorit.webp">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="atom-model.css">
+  <link rel="stylesheet" href="flame.css">
+  <link rel="stylesheet" href="school.css">
+  <link rel="stylesheet" href="redox.css">
+  <link rel="stylesheet" href="practice.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#inhalt">Zum Inhalt</a>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="#periodensystem" data-page="periodensystem" aria-label="D[Ag] Table, Startseite">
+        <img width="38" height="38" src="assets/elementatlas.svg" alt="">
+        <span>D<span class="brand-symbol">[Ag]</span> Table</span>
+      </a>
+      <nav class="main-nav" aria-label="Hauptnavigation">
+        <a href="#periodensystem" data-page="periodensystem" aria-current="page"><span data-icon="table"></span>Periodensystem</a>
+        <a href="#verbindungen" data-page="verbindungen"><span data-icon="molecule"></span>Verbindungen</a>
+        <a id="redox-nav" href="#redox" data-page="redox" aria-label="Redox und Batterien" hidden><span data-icon="battery"></span><span>Redox<span class="rx-nav-extra"> &amp; Batterien</span></span></a>
+        <a href="#ueben" data-page="ueben"><span data-icon="book-open"></span>Üben</a>
+      </nav>
+      <button type="button" class="help-button" data-action="help"><span data-icon="book"></span>Lernhilfe</button>
+    </div>
+  </header>
+
+  <main id="inhalt" class="shell" tabindex="-1">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-art"><img src="assets/fluorit.webp" alt="Violette, würfelförmige Fluoritkristalle" width="1680" height="611" fetchpriority="high"></div>
+      <div class="hero-content">
+        <h1 id="page-title">D[Ag] Table</h1>
+        <p id="page-description">Erkunde das Periodensystem und entdecke, in welchen Verbindungen dir die Elemente im Alltag begegnen.</p>
+        <div class="hero-stats" id="hero-stats" aria-label="Aufbau des Periodensystems">
+          <span><i data-icon="table"></i><b>12</b> Elemente</span><span><i data-icon="molecule"></i><b>5</b> Verbindungen</span>
+        </div>
+      </div>
+      <button type="button" class="mineral-label" hidden data-compound="CaF2" title="Calciumfluorid kennenlernen"><span data-icon="gem"></span><strong>Fluorit</strong><span class="mineral-formula">CaF<sub>2</sub></span></button>
+    </section>
+
+    <section class="school-picker" aria-labelledby="school-heading">
+      <div class="school-choice">
+        <h2 id="school-heading">Jahrgangsstufe</h2>
+        <div class="school-buttons" role="group" aria-label="Jahrgangsstufe wählen">
+          <button type="button" data-grade="7" aria-label="Klasse 7" aria-pressed="true">7</button>
+          <button type="button" data-grade="8" aria-label="Klasse 8" aria-pressed="false">8</button>
+          <button type="button" data-grade="9" aria-label="Klasse 9" aria-pressed="false">9</button>
+          <button type="button" data-grade="10" aria-label="Klasse 10" aria-pressed="false">10</button>
+          <button type="button" data-grade="11" aria-label="Klasse 11 · Einführungsphase" aria-pressed="false">11 <small>EF</small></button>
+          <button type="button" data-grade="12" aria-label="Klasse 12 · Qualifikationsphase 1" aria-pressed="false">12 <small>Q1</small></button>
+          <button type="button" data-grade="13" aria-label="Klasse 13 · Qualifikationsphase 2" aria-pressed="false">13 <small>Q2</small></button>
+          <button type="button" data-grade="alle" aria-pressed="false">Gesamtansicht</button>
+        </div>
+        <div id="school-course" class="school-buttons school-course" role="group" aria-label="Kursart für die Qualifikationsphase" hidden>
+          <button type="button" data-course="gk" aria-pressed="true">Grundkurs</button>
+          <button type="button" data-course="lk" aria-pressed="false">Leistungskurs</button>
+        </div>
+      </div>
+      <div class="school-focus" aria-live="polite" aria-atomic="true"><strong id="school-topic">Elemente im Alltag</strong><p id="school-focus"></p></div>
+      <details class="school-plan"><summary>Lehrplanbezug NRW</summary><div id="school-curriculum"></div></details>
+    </section>
+
+    <section id="element-section" class="collection" aria-labelledby="element-heading">
+      <div class="toolbar">
+        <h2 id="element-heading">Elementkarten</h2>
+        <div class="toolbar-controls">
+          <label class="search-field"><span data-icon="search"></span><input id="element-query" type="search" placeholder="Element suchen …" autocomplete="off" aria-label="Element nach Name, Symbol oder Ordnungszahl suchen"><kbd aria-hidden="true">/</kbd></label>
+          <label class="select-field" hidden><span data-icon="sliders"></span><select id="family-select" aria-label="Elementfamilie auswählen"><option value="all">Alle Familien</option></select><i data-icon="chevron-down"></i></label>
+          <div class="view-toggle" aria-label="Darstellung" role="group">
+            <button id="grid-view" type="button" aria-label="Periodensystem als Tabelle" title="Tabellenansicht" aria-pressed="true"><span data-icon="grid"></span></button>
+            <button id="list-view" type="button" aria-label="Elemente als Liste" title="Listenansicht" aria-pressed="false"><span data-icon="list"></span></button>
+          </div>
+        </div>
+      </div>
+      <div class="measure-bar" hidden>
+        <div class="measure-options" role="group" aria-label="Eigenschaft in Tabelle und Liste anzeigen">
+          <button type="button" data-measure="families" aria-pressed="true"><span data-icon="layers"></span>Elementfamilien</button>
+          <button type="button" data-measure="en" aria-pressed="false"><span aria-hidden="true" class="measure-glyph">χ</span>Elektro&shy;negativität</button>
+          <button type="button" data-measure="radius" aria-pressed="false"><span data-icon="radius"></span>Atomradius</button>
+        </div>
+        <div class="measure-key" id="measure-key" role="status" aria-live="polite"></div>
+      </div>
+      <div id="element-filter-status" class="filter-status" hidden><span role="status" id="element-result-count"></span><button class="text-button" data-action="reset-elements" type="button">Filter zurücksetzen</button></div>
+      <div class="table-panel" id="table-panel">
+        <div class="mobile-hint"><span data-icon="pan"></span>Tabelle seitlich verschieben</div>
+        <div class="table-scroll" id="table-scroll" tabindex="0" role="region" aria-label="Periodensystem, Gruppen und Perioden">
+          <div id="periodic-table" class="periodic-table" role="group" aria-label="Elemente im Periodensystem"></div>
+        </div>
+        <div class="legend" id="family-legend" hidden aria-label="Farblegende und Familienfilter"><strong>Elementfamilien</strong><div class="legend-items" id="legend-items"></div></div>
+      </div>
+      <div id="element-list" class="element-list" hidden></div>
+    </section>
+
+    <section id="compound-section" class="collection" hidden aria-labelledby="compound-heading">
+      <div class="toolbar">
+        <h2 id="compound-heading">Verbindungen erkunden</h2>
+        <div class="toolbar-controls">
+          <label class="search-field compound-search"><span data-icon="search"></span><input type="search" id="compound-query" placeholder="Name, Formel oder Verwendung …" aria-label="Verbindungen nach Name, Formel oder Verwendung durchsuchen" autocomplete="off"><kbd aria-hidden="true">/</kbd></label>
+          <label class="select-field"><span data-icon="sliders"></span><select id="category-select" aria-label="Anwendungsbereich auswählen"><option value="all">Alle Bereiche</option><option>Alltag</option><option>Technik</option><option>Natur</option><option>Forschung</option></select><i data-icon="chevron-down"></i></label>
+        </div>
+      </div>
+      <div class="filter-status" id="compound-filter-status" hidden><span role="status" id="compound-result-count"></span><button class="text-button" data-action="reset-compounds" type="button">Filter zurücksetzen</button></div>
+      <div id="compound-cards" class="compound-cards"></div>
+      <div class="load-row" id="load-row"></div>
+    </section>
+    <section id="redox-section" class="collection" hidden aria-label="Redoxreaktionen und Batterien">
+      <h2 class="rx-select-heading" id="rx-select-title">Zelle auswählen</h2>
+      <div class="rx-choices" id="redox-choices" role="group" aria-labelledby="rx-select-title"></div>
+      <article class="rx-study" id="redox-study" aria-labelledby="rx-cell-title"></article>
+    </section>
+    <section id="practice-section" class="collection" aria-label="Übungen zum Chemieunterricht" hidden><div id="practice-root"></div></section>
+    <noscript>Bitte aktiviere JavaScript, um Elemente, Verbindungen und Übungen zu erkunden.</noscript>
+  </main>
+
+  <footer class="shell footer"><span class="footer-brand"><span data-icon="atom"></span> D[Ag] Table</span><button type="button" class="footer-link" data-action="sources"><span data-icon="book-open"></span>Datenquellen</button></footer>
+  <dialog id="detail-dialog" class="detail-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-shell"><div class="dialog-bar"><div id="dialog-context"></div><button type="button" id="dialog-close" class="icon-button" aria-label="Schließen" title="Schließen"><span data-icon="close"></span></button></div><div id="dialog-body" class="dialog-body"></div></div>
+  </dialog>
+  <div id="practice-print"></div>
+</body>
+</html>

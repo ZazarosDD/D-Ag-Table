@@ -1,0 +1,167 @@
+.on-redox .hero {
+  min-height: 126px;
+  padding-block: 22px;
+  background: linear-gradient(110deg, #302540, #493761 65%, #263c4d);
+}
+.on-redox .hero-art, .on-redox .mineral-label { display: none; }
+.on-redox .hero-content { width: 100%; max-width: none; }
+.on-redox .hero p { max-width: 72ch; }
+.on-redox .hero h1 { font-size: clamp(2rem, 3.2vw, 3rem); }
+
+.rx-select-heading { font-size: 1.05rem; margin: 0 0 9px; }
+.rx-choices { display: flex; flex-wrap: wrap; gap: 7px; }
+.rx-choice {
+  flex: 1 1 160px; min-height: 54px; padding: 8px 13px;
+  border: 1px solid var(--line); border-radius: 9px; background: #fff;
+  text-align: left; color: #433c50;
+}
+.rx-choice strong, .rx-choice span { display: block; line-height: 1.4; }
+.rx-choice strong { font-size: .96rem; }
+.rx-choice span { color: #61596e; font-size: .85rem; }
+.rx-choice:hover { background: #f8f6fb; }
+.rx-choice[aria-pressed=true] { background: #f0eaf8; border-color: #8e70ad; box-shadow: inset 3px 0 #6b4c8f; }
+.rx-choice[aria-pressed=true] strong { color: #4a2f66; }
+
+.rx-study { margin-top: 20px; }
+.rx-study-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px 18px; margin-bottom: 16px; }
+.rx-study-heading h2 { margin: 0; font-size: clamp(1.45rem, 2.4vw, 2rem); letter-spacing: -.035em; }
+.rx-study-heading p { margin: 5px 0 0; color: #514b5c; max-width: 78ch; line-height: 1.55; }
+.rx-cell-type { font-size: .84rem; font-weight: 600; border: 1px solid #d9d1e3; border-radius: 6px; color: #59456a; padding: 4px 9px; flex: none; }
+.rx-workbench { display: grid; grid-template-columns: minmax(0,1.13fr) minmax(0,1fr); gap: 15px; align-items: stretch; }
+.rx-figure, .rx-reactions, .rx-potentials, .rx-transfer { margin: 0; padding: clamp(14px,2vw,23px); border: 1px solid var(--line); border-radius: 13px; background: #fff; min-width: 0; }
+.rx-figure { background: linear-gradient(140deg,#f8f6fc,#f6f9fb); }
+.rx-workbench h3, .rx-transfer h3 { font-size: 1.12rem; margin: 0 0 8px; }
+.rx-workbench h4 { font-size: .97rem; margin: 0; }
+.rx-sketch { display: block; width: 100%; max-width: 605px; height: auto; margin: 8px auto 12px; }
+.rx-sketch text { font-family: inherit; text-anchor: middle; }
+.rx-small-label { font-size: 14px; font-weight: 500; fill: #494457; }
+.rx-electrode-label { font-size: 16px; font-weight: 650; fill: #323042; }
+.rx-ion-label { font-size: 15px; fill: #344853; font-weight: 550; }
+.rx-glass { fill: #fff; stroke: #657584; stroke-width: 2.8; stroke-linecap: round; }
+.rx-bridge-wall, .rx-bridge-fill { fill: none; stroke: #7c8294; stroke-width: 14; stroke-linecap: round; }
+.rx-bridge-fill { stroke: #ebebf2; stroke-width: 9; }
+.rx-plate.minus { fill: #818c9a; stroke: #4f5a66; }
+.rx-plate.plus { fill: #c78669; stroke: #85563f; }
+.rx-sketch:not([data-cell-type=daniell]) .rx-plate.plus { fill: #60575a; stroke: #494149; }
+.rx-plate { stroke-width: 1.6; }
+.rx-cutaway { fill: #fff; stroke: #667484; stroke-width: 2.8; }
+.rx-liquid { fill: #dcebf1; }
+.rx-separator { fill: #f5eecf; stroke: #918266; stroke-width: 1.3; }
+.rx-separator-dots { stroke: #9a8e6c; stroke-dasharray: 2 4; stroke-width: 1.8; }
+.rx-wire, .rx-direction { fill: none; stroke: #435565; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
+.rx-direction { stroke: #4a335d; stroke-width: 2.4; }
+.rx-workbench[data-circuit=open] .rx-direction { visibility: hidden; }
+.rx-load { fill: #f5eed5; stroke: #5c5260; stroke-width: 2; }
+.rx-pole.minus circle { fill: #e0edf1; stroke: #70949e; }
+.rx-pole.plus circle { fill: #f5e5d9; stroke: #ac8263; }
+.rx-pole text { font-size: 19px; fill: #353547; font-weight: 650; }
+.rx-electron circle { fill: #61428b; stroke: white; stroke-width: 2; }
+.rx-electron text { fill: white; font-size: 13px; font-weight: 700; }
+.rx-controls { display: flex; flex-wrap: wrap; gap: 6px; }
+.rx-controls button { background: #fff; color: #45394f; border: 1px solid #cec4d7; border-radius: 7px; padding: 7px 12px; min-height: 37px; font-size: .91rem; font-weight: 550; }
+.rx-controls button:hover:not(:disabled) { background: #f2edf8; }
+.rx-controls .rx-play { color: #fff; background: #64458a; border-color: #64458a; }
+.rx-controls .rx-play:hover:not(:disabled) { color: #fff; background: #50376e; }
+.rx-controls button:disabled { opacity: .46; cursor: default; }
+.rx-status { font-size: .98rem; line-height: 1.5; margin: 10px 0; min-height: 3em; color: #403448; }
+.rx-interior { border-top: 1px solid #dcd9e4; padding-top: 10px; }
+.rx-interior p, .rx-half > p:last-child { color: #534c5b; margin: 4px 0 0; font-size: .94rem; line-height: 1.48; }
+.rx-half { margin-top: 8px; padding: 10px 12px; background: #f6f8fa; border-left: 3px solid #7599a2; border-radius: 5px; }
+.rx-positive { background: #fbf7f2; border-color: #bb8b63; }
+.rx-workbench[data-phase=abgabe] .rx-negative { outline: 2px solid #60838b; outline-offset: -1px; }
+.rx-workbench[data-phase=aufnahme] .rx-positive { outline: 2px solid #aa794e; outline-offset: -1px; }
+.rx-half-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 2px 9px; flex-wrap: wrap; }
+.rx-half-heading span { font-size: .83rem; color: #59505f; }
+.rx-equation { color: #30243f; font-size: clamp(.99rem, 1.35vw, 1.17rem); line-height: 1.6; font-weight: 600; margin: 4px 0; overflow-wrap: anywhere; }
+.rx-e-term { white-space: nowrap; color: #603b83; }
+.rx-net { padding: 10px 2px 0; }
+.rx-potentials { margin-top: 14px; padding-block: 12px; }
+.rx-potentials > summary, .rx-note > summary { cursor: pointer; font-weight: 650; line-height: 1.5; color: #4d3769; }
+.rx-potential-body { padding: 10px 0 3px; }
+.rx-potential-body p, .rx-note p, .rx-transfer p { margin: 7px 0 0; line-height: 1.55; }
+.rx-values { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: .94rem; }
+.rx-values caption { text-align: left; margin-bottom: 6px; color: #595164; font-size: .88rem; }
+.rx-values td, .rx-values th { padding: 7px 9px; text-align: left; line-height: 1.5; border-bottom: 1px solid #e4dfe9; }
+.rx-values thead { background: #f6f3f9; }
+.rx-values td:last-child, .rx-values th:last-child { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.rx-calculation { background: #f2edf8; border-radius: 8px; padding: 9px 13px; }
+.rx-calculation span, .rx-condition { font-size: .87rem; color: #5b5065; }
+.rx-calculation p { margin: 2px 0 0; font-size: 1.07rem; }
+.rx-transfer { margin-top: 13px; }
+.rx-note { margin-top: 11px; }
+.rx-links { margin: 6px 0; padding-left: 19px; color: #594574; }
+.rx-links li { margin: 4px 0; }
+.rx-links a { color: #594574; text-decoration: underline; text-underline-offset: 2px; }
+.rx-sources { font-size: .91rem; padding: 4px 2px; }
+.rx-step-tabs { display: flex; flex-wrap: wrap; gap: 5px; margin: 11px 0; }
+.rx-step-tabs button { padding: 7px 13px; min-height: 37px; border: 1px solid #d9d1e2; border-radius: 7px; color: #47394e; background: #fff; font-weight: 550; }
+.rx-step-tabs button[aria-pressed=true] { background: #584075; border-color: #584075; color: white; }
+.rx-step-tabs button:disabled { opacity: .57; }
+.rx-live-card { padding: clamp(14px,2vw,23px); border: 1px solid var(--line); border-radius: 13px; background: #fff; min-width: 0; }
+.rx-live-card p { margin: 6px 0; line-height: 1.5; }
+.rx-before-poles { display: flex; flex-wrap: wrap; gap: 7px 24px; margin: 9px 0 13px; }
+.rx-before-poles strong { display: block; font-size: .9rem; color: #63596b; }
+.rx-live-eq { padding: 9px 11px; border-radius: 7px; background: #f2eef7; font-weight: 650; color: #423154; overflow-wrap: anywhere; }
+.rx-ledger { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; margin: 12px 0; }
+.rx-ledger h5 { margin: 2px 0 8px; font-size: .94rem; }
+.rx-inventory { margin: 0; padding: 0; list-style: none; }
+.rx-inventory li { display: flex; flex-wrap: wrap; gap: 4px 7px; align-items: center; margin: 6px 0; line-height: 1.25; }
+.rx-inventory li > span:last-child { font-size: .89rem; }
+.rx-inventory small { display: block; font-size: .82rem; color: #645d6b; }
+.rx-chemical { border: 1px solid #b3a5bf; border-radius: 4px; padding: 3px 5px; font-weight: 600; background: #f0eaf6; white-space: nowrap; }
+.rx-chemical[data-state=aq], .rx-chemical[data-state=l] { background: #e5f2f3; border-color: #8daeb2; border-radius: 20px; }
+.rx-chemical[data-state=wire] { background: #5e4282; border-color: #5e4282; color: #fff; }
+.rx-route-read b { display: block; margin: 11px 0 2px; color: #40314e; }
+.rx-smallprint { font-size: .91rem; color: #5c5164; line-height: 1.5; }
+.rx-status { min-height: 1.5em; font-weight: 550; }
+.rx-settings, .rx-all-equations { padding: 11px 15px; margin-top: 12px; border: 1px solid var(--line); border-radius: 9px; background: #fff; }
+.rx-settings summary { cursor: pointer; font-weight: 650; color: #51396c; }
+.rx-settings-content { padding-top: 10px; }
+.rx-fields { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(168px,100%),1fr)); gap: 10px; }
+.rx-field { display: grid; gap: 5px; align-content: start; font-size: .9rem; color: #42374e; font-weight: 600; }
+.rx-field select { width: 100%; min-height: 38px; border: 1px solid #c5bbce; border-radius: 7px; padding: 6px 26px 6px 9px; font: inherit; font-weight: 400; color: #332b3c; appearance: none; background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='14' height='14'%3E%3Cpath d='m3 6 5 5 5-5' stroke='%235b4e69' fill='none' stroke-width='1.7'/%3E%3C/svg%3E") no-repeat right 9px center; }
+.rx-meter { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 13px; padding: 10px 15px; border-radius: 8px; border: 1px solid #bed5d4; background: #eef6f5; color: #254b46; margin-top: 10px; }
+.rx-meter b { font-variant-numeric: tabular-nums; font-size: 1.2rem; }
+.rx-meter small { color: #405954; font-size: .86rem; }
+.rx-all-equations .rx-reactions { border: 0; padding: 7px 0 0; }
+.rx-material rect { fill: #f6f4f8; stroke: #796b84; stroke-width: 1.7; }
+.rx-material.rx-form-aq rect { fill: #e8f5f6; stroke: #437b83; }
+.rx-material.rx-kind-after.rx-form-s rect { fill: #f8ead8; stroke: #986d42; }
+.rx-symbol { fill: #312c3b; font-size: 15px; font-weight: 700; }
+.rx-reagent .rx-symbol { font-size: 12px; }
+.rx-material.rx-form-l rect { fill: #edf5fc; stroke: #718b9d; }
+.rx-material-state { fill: #423a4c; font-size: 12px; font-weight: 550; }
+.rx-switch rect { fill: #f8f6fb; }
+.rx-switch circle { fill: #455563; }
+.rx-switch path { fill: none; stroke: #455563; stroke-width: 3.5; stroke-linecap: round; }
+.rx-solute-dot.zinc { fill: #9faeba; }
+.rx-solute-dot.copper { fill: #73a2b2; }
+.rx-bridge-ion text, .rx-ion-flow text { font-size: 12px; font-weight: 700; fill: #27363b; }
+.rx-bridge-ion.anion rect { fill: #f9e8da; stroke: #b3896f; }
+.rx-bridge-ion.cation rect, .rx-ion-flow rect { fill: #deefe8; stroke: #74a193; }
+@media (max-width: 470px) {
+  .rx-step-tabs { gap: 3px; }
+  .rx-step-tabs button { font-size: .87rem; padding: 6px 8px; }
+  .rx-ledger { gap: 7px; }
+  .rx-inventory li { align-items: start; }
+}
+@media (max-width:790px) {
+  .rx-workbench { grid-template-columns: minmax(0,1fr); }
+  .rx-study-heading { flex-wrap: wrap; }
+  .rx-status { min-height: 0; }
+}
+@media (max-width:640px) {
+  .redox-available .main-nav { flex-wrap: wrap; gap: 2px; }
+  .redox-available .main-nav a { gap: 4px; padding-inline: 7px; }
+  .redox-available .rx-nav-extra { display: none; }
+  .on-redox .hero { min-height: 108px; }
+  .on-redox .hero p { max-width: none; }
+  .rx-choice { flex-basis: calc(50% - 8px); min-width: 0; }
+  .rx-values td, .rx-values th { padding: 6px 4px; }
+  .rx-sketch { margin-block: 6px; }
+  .rx-controls button { padding-inline: 9px; }
+}
+@media (max-width:360px) {
+  .redox-available .main-nav svg { display: none; }
+  .rx-controls { row-gap: 5px; }
+}

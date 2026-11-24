@@ -1,0 +1,65 @@
+.school-picker {
+  margin-top: 20px;
+  padding: 16px 20px;
+  border: 1px solid #dfd8e9;
+  border-radius: 13px;
+  background: #fbf9fe;
+}
+.school-choice, .school-buttons { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.school-choice { gap: 10px 16px; }
+.school-choice h2 { margin: 0; font-size: 1.04rem; }
+.school-buttons button {
+  min-width: 37px; min-height: 36px; padding: 5px 11px;
+  background: white; color: #513f66; border: 1px solid #dcd3e6; border-radius: 7px; font-weight: 600;
+}
+.school-buttons button small { margin-left: 2px; font-size: .69rem; }
+.school-buttons button:hover { background: #f1eaf9; }
+.school-buttons button[aria-pressed=true] { background: #614495; border-color: #614495; color: white; }
+.school-course { padding-inline-start: 13px; border-inline-start: 1px solid #d7cbde; }
+.school-focus { display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px 10px; margin-top: 12px; }
+.school-focus strong { font-size: .91rem; color: #49365d; }
+.school-focus p, .school-plan p { font-size: .86rem; line-height: 1.5; color: #524a5a; margin: 0; }
+.school-plan { margin-top: 8px; font-size: .78rem; }
+.school-plan summary, .school-safety summary { cursor: pointer; color: #584274; font-weight: 600; }
+.school-plan[open] summary { margin-bottom: 5px; }
+.school-plan p + p { margin-top: 4px; }
+.school-plan .sources-list { margin: 7px 0 0; }
+.school-selection.periodic-table { grid-template-rows: 17px repeat(var(--school-periods), var(--h)); }
+.main-group-grid.periodic-table { min-width: 520px; grid-template-columns: 22px repeat(8, minmax(0,1fr)); }
+.entry-grid.periodic-table {
+  grid-template-columns: repeat(6, minmax(0,1fr)); grid-template-rows: none;
+  grid-auto-rows: minmax(76px,auto); min-width: 0; gap: 7px;
+}
+.entry-grid .tile-name { font-size: .75rem; }
+.element-list.entry-list .list-row { grid-template-columns: 48px minmax(0,1.5fr) minmax(0,1fr); }
+.element-list.entry-list .list-state { display: block; }
+.school-safety { border: 1px solid #e5dfe8; border-radius: 9px; padding: 8px 12px; margin-top: 12px; }
+.school-safety .section-heading { margin-top: 8px; }
+.school-learning { margin-top: 15px; }
+.school-learning h3, .school-learning h4 { font-size: 1rem; margin: 0 0 4px; }
+.school-learning p { margin: 0; line-height: 1.5; font-size: .9rem; }
+.school-learning + .school-learning { margin-top: 9px; }
+.school-atom .atom-shell-card { max-width: 230px; }
+.school-atom .atom-pair:has(> :only-child) { grid-template-columns: minmax(135px,230px); }
+@media (max-width:640px) {
+  .school-picker { padding: 13px 12px; }
+  .school-choice { align-items: flex-start; flex-direction: column; }
+  .school-course { border: 0; padding: 0; }
+  .school-buttons button { min-width: 34px; padding: 5px 9px; }
+  .entry-grid.periodic-table { grid-template-columns: repeat(3,minmax(0,1fr)); }
+}
+.school-safety summary, .school-extra summary { min-height: 30px; line-height: 30px; }
+.school-signs { display: inline-flex; gap: 3px; vertical-align: middle; margin-inline-start: 5px; }
+.school-extra { margin-top: 14px; padding-top: 7px; border-top: 1px solid #e4dce9; }
+.school-extra summary { cursor: pointer; font-weight: 600; color: #57406f; }
+.school-learning + .school-atom, .school-learning + .school-extra { margin-top: 13px; }
+.molecule-shape { display: flex; align-items: center; flex-wrap: wrap; gap: 3px 14px; margin: 12px 0; padding: 8px 13px; background: #f6f3f9; border-radius: 10px; }
+.molecule-shape svg { display: block; flex: 0 1 184px; width: 55%; max-width: 220px; }
+.molecule-shape figcaption { flex: 1 1 160px; color: #51495d; font-size: .9rem; line-height: 1.45; }
+.molecule-shape text { fill: #30263c; font-size: 18px; font-weight: 600; text-anchor: middle; }
+.molecule-shape .mol-angle { font-size: 13px; font-weight: 500; }
+.mol-bond { fill: none; stroke: #524361; stroke-width: 3; }
+.molecule-shape circle { stroke: #81718e; stroke-width: 1.3; }
+.mol-O { fill: #f4d6d3; }
+.mol-H { fill: #fff; }
+.mol-C { fill: #d5cbdc; }

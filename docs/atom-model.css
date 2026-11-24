@@ -1,0 +1,283 @@
+.atom-visuals {
+  container-type: inline-size;
+  min-width: 0;
+}
+
+.atom-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.atom-pair figure {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin: 0;
+  min-width: 0;
+  padding: 12px;
+  border-radius: 11px;
+  overflow: hidden;
+}
+
+.atom-pair figcaption {
+  margin: 0;
+  font-size: .875rem;
+  line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: -.015em;
+  overflow-wrap: anywhere;
+}
+
+.atom-shell-card {
+  color: #f6f1ff;
+  background: radial-gradient(ellipse at 50% 54%, #453357, #2c243c 68%, #292238);
+  border: 1px solid #41354e;
+}
+
+.atom-shell-drawing {
+  display: block;
+  align-self: center;
+  width: 100%;
+  max-width: 180px;
+  height: auto;
+  flex: 1 1 auto;
+}
+
+.atom-orbit {
+  fill: none;
+  stroke: #86749b;
+  stroke-width: 1;
+}
+
+.atom-electron {
+  fill: #d7c6f2;
+}
+
+.atom-shell-outer .atom-orbit {
+  stroke: #be9664;
+  stroke-dasharray: 2.8 2.1;
+}
+
+.atom-shell-outer .atom-electron {
+  fill: #ffd397;
+}
+
+.atom-kern {
+  fill: #815eaa;
+  stroke: #b69bd6;
+  stroke-width: 1;
+}
+
+.atom-kern-symbol {
+  fill: #fff;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.atom-shell-key > span {
+  display: block;
+  color: #e2daec;
+  font-size: .75rem;
+  line-height: 1.35;
+}
+
+.atom-shell-key ol {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 3px 0 0;
+  padding: 0;
+  gap: 3px 7px;
+  list-style: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.atom-shell-key li {
+  display: grid;
+  justify-items: center;
+  line-height: 1.17;
+}
+
+.atom-shell-key li span {
+  color: #c7b7db;
+  font-size: .7rem;
+  font-weight: 500;
+}
+
+.atom-shell-key li b {
+  font-size: .82rem;
+}
+
+.atom-shell-key li:last-child :is(span, b) {
+  color: #ffd397;
+}
+
+.atom-lewis-card,
+.atom-config-card {
+  color: #392c49;
+  background: #f7f3fb;
+  border: 1px solid #e5daec;
+}
+
+.atom-lewis-drawing {
+  display: block;
+  flex: 1 1 0;
+  align-self: center;
+  width: 100%;
+  max-width: 136px;
+  min-height: 86px;
+}
+
+.atom-lewis-drawing text {
+  fill: #442d64;
+  font-family: inherit;
+  font-size: 37px;
+  font-weight: 700;
+}
+
+.atom-lewis-dot {
+  fill: #765420;
+}
+
+.atom-lewis-key {
+  display: grid;
+  color: #55475e;
+  gap: 2px;
+  line-height: 1.3;
+}
+
+.atom-lewis-key strong {
+  color: #40304e;
+  font-size: .82rem;
+}
+
+.atom-lewis-key span,
+.atom-config-shell {
+  font-size: .77rem;
+}
+
+.atom-config-text {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  align-content: center;
+  flex: 1;
+  gap: 2px 6px;
+  padding: 16px 0;
+  color: #573c79;
+  font-size: 1.07rem;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.atom-config-text span {
+  white-space: nowrap;
+}
+
+.atom-config-shell {
+  color: #574b63;
+  line-height: 1.4;
+}
+
+.atom-model-note {
+  margin: 8px 0 0;
+  color: #635c6d;
+  line-height: 1.45;
+  font-size: .82rem;
+}
+
+.atom-prediction strong {
+  color: #55426a;
+}
+
+.orbital-panel {
+  margin-top: 14px;
+  padding: 14px;
+  border: 1px solid #e2dce9;
+  border-radius: 11px;
+  background: #fff;
+  color: #382e42;
+}
+
+.orbital-panel h4 { margin: 0; font-size: 1rem; }
+.orbital-panel p { margin: 5px 0 12px; font-size: .84rem; line-height: 1.45; color: #595160; }
+.orbital-head, .orbital-shell summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 1.1fr) 15px;
+  gap: 6px;
+  align-items: center;
+  padding-inline: 7px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.orbital-head {
+  padding-block: 6px;
+  border-bottom: 1px solid #dcd5e3;
+  font-size: .74rem;
+  font-weight: 600;
+  color: #5b5067;
+}
+.orbital-head > :first-child { text-align: start; }
+.orbital-head small { display: block; font-weight: 400; font-size: .7rem; }
+.orbital-shell { border-bottom: 1px solid #e9e4ed; }
+.orbital-shell summary {
+  min-height: 43px;
+  list-style: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: .91rem;
+}
+.orbital-shell summary::-webkit-details-marker { display: none; }
+.orbital-shell summary:hover, .orbital-shell[open] summary { background: #f6f2fa; }
+.orbital-shell-name { display: flex; gap: 6px; align-items: center; }
+.orbital-shell-name b {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border-radius: 5px;
+  background: #eae1f4;
+  color: #5d3d7e;
+}
+.orbital-shell summary small { color: #655b6e; font-size: .75rem; }
+.orbital-shell summary .icon { width: 15px; height: 15px; color: #695279; }
+.orbital-shell[open] summary .icon { transform: rotate(180deg); }
+.orbital-subshells { display: grid; gap: 5px; padding: 9px 7px 10px; }
+.orbital-subshell { display: flex; align-items: center; gap: 7px; min-width: 0; }
+.orbital-subshell-label {
+  flex: 0 0 35px;
+  font-size: .88rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.orbital-boxes { display: flex; gap: 3px; min-width: 0; }
+.orbital-box {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 26px;
+  border: 1px solid #9a83ad;
+  border-radius: 3px;
+  color: #4a2e62;
+  background: #f4eef8;
+  font-family: system-ui, sans-serif;
+  font-size: 1.02rem;
+  line-height: 1;
+  letter-spacing: -.08em;
+}
+.orbital-box:empty { border-style: dashed; background: transparent; }
+.orbital-panel .orbital-foot { margin: 9px 0 0; font-size: .76rem; }
+
+@container (max-width: 335px) {
+  .atom-pair { gap: 6px; }
+  .atom-pair figure { padding: 9px; }
+  .atom-shell-key ol { gap: 3px 4px; }
+  .atom-pair figcaption { font-size: .81rem; }
+  .atom-lewis-drawing { min-height: 68px; }
+  .orbital-panel { padding: 10px; }
+  .orbital-head, .orbital-shell summary { gap: 3px; padding-inline: 4px; }
+  .orbital-shell-name { gap: 4px; }
+  .orbital-subshells { padding-inline: 4px; }
+  .orbital-box { width: 21px; }
+}
