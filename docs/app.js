@@ -96,13 +96,21 @@ function renderGrid() {
     html.push(main ? '<span class="axis axis-corner" title="Hauptgruppe">HG</span>' : '<span class="axis axis-corner" title="Gruppennummer">Gr.</span>');
     for (let group = 1; group <= (main ? 8 : 18); group++) {
       const iupac = main && group >= 3 ? group + 10 : group;
-      const names = {1:'Alkali­metalle',2:'Erdalkali­metalle',13:'Bor­gruppe',14:'Kohlenstoff­gruppe',15:'Stickstoff­gruppe',16:'Chalko­gene',17:'Halo­gene',18:'Edel­gase'};
-      const roman = {1:'I',2:'II',13:'III',14:'IV',15:'V',16:'VI',17:'VII',18:'VIII'};
-      const name = names[iupac];
-      html.push(`<span class="axis group-heading" style="grid-row:1;grid-column:${group + 1}" title="${name ? name.replaceAll('­','') + ' · ' + roman[iupac] + '. Hauptgruppe' : 'Nebengruppe'} · IUPAC-Gruppe ${iupac}"><span class="group-name">${name || ''}</span><span class="group-number">${iupac}${name ? ' · ' + roman[iupac] : ''}</span></span>`);
-    
+      const groups = {
+        1: ['Alkali­metalle', 'I', 'alkali'],
+        2: ['Erdalkali­metalle', 'II', 'alkaline'],
+        13: ['Bor­gruppe', 'III', ''],
+        14: ['Kohlen­stoff­gruppe', 'IV', ''],
+        15: ['Stick­stoff­gruppe', 'V', ''],
+        16: ['Chalko­gene', 'VI', ''],
+        17: ['Halo­gene', 'VII', 'halogen'],
+        18: ['Edel­gase', 'VIII', 'noble'],
+      };
+      const info = groups[iupac];
+      const title = info ? info[0].replaceAll('­','') + ' · ' + info[1] + '. Hauptgruppe' : 'Nebengruppe';
+      html.push(`<span class="axis group-heading ${info ? 'main-heading ' + (info[2] ? 'fam-' + info[2] : 'mixed-heading') : 'transition-heading'}" style="grid-row:1;grid-column:${group + 1}" title="${title} · IUPAC-Gruppe ${iupac}">${info ? '<span class="group-roman">' + info[1] + '</span><span class="group-name">' + info[0] + '</span>' : ''}<span class="group-number">${iupac}</span></span>`);
     }
-    if (!main) html.push('<span class="axis subgroup-heading" style="grid-row:1;grid-column:4/14">Nebengruppen (Übergangsmetalle)</span>');
+    if (!main) html.push('<span class="axis subgroup-heading fam-transition" style="grid-row:1;grid-column:4/14"><strong>Nebengruppen</strong><span>Übergangsmetalle · Gruppen 3–12</span></span>');
     for (let period = 1; period <= periods; period++) {
       html.push(`<span class="axis period" style="grid-column:1;grid-row:${period + 1}" title="Periode ${period}">${period}</span>`);
     }
