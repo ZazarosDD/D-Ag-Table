@@ -63,3 +63,41 @@
 .mol-O { fill: #f4d6d3; }
 .mol-H { fill: #fff; }
 .mol-C { fill: #d5cbdc; }
+
+
+/* Group headings: preserve the existing row coordinates and family colours. */
+.periodic-table:not(.entry-grid) {
+  grid-template-rows: 65px repeat(7,var(--h)) 9px repeat(2,var(--h));
+}
+.school-selection.periodic-table {
+  grid-template-rows: 65px repeat(var(--school-periods),var(--h));
+}
+.periodic-table .group-heading {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-self: stretch;
+  gap: 4px;
+  padding-bottom: 3px;
+  min-width: 0;
+}
+.group-name {
+  font-size: .66rem;
+  line-height: 1.12;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+  hyphens: manual;
+  color: #514b60;
+}
+.group-number { font-size: .68rem; white-space: nowrap; }
+.periodic-table .subgroup-heading {
+  align-self: start;
+  justify-self: stretch;
+  padding: 6px 4px;
+  border-bottom: 1px solid #d5d0dc;
+  font-size: .78rem;
+  font-weight: 600;
+  color: #514b60;
+  pointer-events: none;
+}
+.periodic-table:not(.entry-grid):not(.main-group-grid) { min-width: 1140px; }
