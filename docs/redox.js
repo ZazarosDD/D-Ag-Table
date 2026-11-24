@@ -1,7 +1,6 @@
 import { escapeHtml } from './details.js';
 import { cellsForStage } from './redox-cells.js';
 import { icon } from './icons.js';
-import { createPathDraft, pathSketch, editPathDraft } from './practice-paths.js';
 import { steps, stepIndex, particleBalance, modelVoltage, stepCard, settingValues, settingsMarkup } from './redox-model.js';
 import { scenePieces, createScene } from './redox-scene.js';
 
@@ -149,7 +148,6 @@ function potentials(cell, stage) {
 
 export function redoxStudy(cell, stage) {
   return `<header class="rx-study-heading"><div><h2 id="rx-cell-title">${cell.name}</h2><p>${escapeHtml(cell.use)}</p></div><span class="rx-cell-type">${cell.type}</span></header>
-    ${cell.id === 'daniell' ? '<section class="rx-prediction" data-rx-prediction aria-label="Vorhersage zum Daniell-Element"></section>' : ''}
     <div class="rx-solution"><div class="rx-step-tabs" role="group" aria-label="Beobachtungsschritt wählen">${steps.map(s => '<button type="button" data-redox-action="seek-' + s.id + '" aria-pressed="' + (s.id === 'bereit') + '">' + s.title + '</button>').join('')}</div>
     <div class="rx-workbench" data-rx-board data-phase="bereit">
       <figure class="rx-figure"><figcaption><h3>Teilchen beim Entladen</h3></figcaption>
@@ -189,21 +187,6 @@ export function createRedoxPlayer(root, cell, stage = { year: 9 }) {
   const meter = stage.all || stage.year >= 12 ? root.querySelector('[data-rx-voltage]') : null;
   const meterDetail = meter ? root.querySelector('[data-rx-voltage-detail]') : null;
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const panel = cell.id === 'daniell' ? root.querySelector('[data-rx-prediction]') : null;
-  const solution = root.querySelector('.rx-solution');
-  const draft = createPathDraft();
-  let gate = panel ? 'ready' : 'model';
-  let requested = '';
-  function paintGate(focus = '') {
-    root.dataset.prediction = gate;
-    if (!panel) return;
-    solution.hidden = gate !== 'model';
-    const buttons = (name, label, primary = false) => '<button type="button" data-redox-action="' + name + '"' + (primary ? ' class="rx-play"' : '') + '>' + label + '</button>';
-    if (gate === 'ready') panel.innerHTML = '<h3>Vorhersagestopp</h3><p>Links steht die Zinkhalbzelle, rechts die Kupferhalbzelle. Wohin wandern die Elektronen und die beiden Ionen der Salzbrücke beim Entladen?</p><div class="rx-controls">' + buttons('predict', 'Teilchenwege zeichnen', true) + buttons('model', 'Direkt zur Animation') + '</div>';
-    if (gate === 'drawing') panel.innerHTML = pathSketch(draft) + '<div class="rx-controls rx-to-model">' + buttons('model', draft.checked ? 'Modell und Animation öffnen' : 'Vorhersage überspringen') + '</div>';
-    if (gate === 'model') panel.innerHTML = '<div class="rx-controls">' + buttons('predict', 'Zur eigenen Vorhersage') + '</div>';
-    if (focus) (panel.querySelector('[data-redox-action="' + focus + '"]:not(:disabled)') || panel.querySelector('button:not(:disabled)'))?.focus({ preventScroll: true });
-  }
   const values = settingValues(stage,cell);
   const settings = { amount: 1, speed: 1, series: 1, zinc: 1, copper: 1 };
   let balance = particleBalance(cell,1);
@@ -270,22 +253,6 @@ export function createRedoxPlayer(root, cell, stage = { year: 9 }) {
     frame = window.requestAnimationFrame(tick);
   }
   function action(name) {
-    if (panel && name === 'model') {
-      gate = 'model'; paintGate();
-      const resume = requested; requested = '';
-      if (resume) action(resume);
-      (closed ? motion.matches ? step : play : circuit).focus({ preventScroll: true });
-      return;
-    }
-    if (panel && (name === 'predict' || (gate !== 'model' && (name === 'play' || name === 'step')))) {
-      pause(); position = 0; paint();
-      requested = name === 'predict' ? '' : name;
-      gate = 'drawing'; paintGate('path-carrier-e'); return;
-    }
-    if (panel && gate === 'drawing' && name.startsWith('path-')) {
-      editPathDraft(draft, name); paintGate(name); return;
-    }
-    if (gate !== 'model') return;
     if (name === 'circuit') {
       closed = !closed; lastIndex = -1; pause(); return;
     }
@@ -308,7 +275,7 @@ export function createRedoxPlayer(root, cell, stage = { year: 9 }) {
   }
   function changeSetting(key, raw) {
     const next = Number(raw);
-    if (gate !== 'model' || !values[key]?.includes(next) || settings[key] === next) return;
+    if (!values[key]?.includes(next) || settings[key] === next) return;
     settings[key] = next;
     if (key === 'amount') {
       pause(); position = 0; lastIndex = -1;
@@ -319,8 +286,6 @@ export function createRedoxPlayer(root, cell, stage = { year: 9 }) {
   }
   function motionChanged() { pause(); }
   motion.addEventListener?.('change', motionChanged);
-  if (solution) solution.hidden = false;
-  paintGate();
   configure();
   paint();
   return { action, changeSetting, pause, dispose() { pause(); motion.removeEventListener?.('change', motionChanged); } };
