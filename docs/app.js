@@ -60,7 +60,7 @@ function gridPosition(element) {
     const cols = window.matchMedia('(max-width: 640px)').matches ? 3 : 6;
     return { column: i % cols + 1, row: Math.floor(i / cols) + 1 };
   }
-  if (stage.year === 8) return { column: mainGroup(element) + 1, row: element.period + 1 };
+  if (stage.year === 8 && !stage.elements.some(e => mainGroup(e) === null)) return { column: mainGroup(element) + 1, row: element.period + 1 };
   if (element.family === 'lanthanide') return { column: element.n - 57 + 4, row: 10 };
   if (element.family === 'actinide') return { column: element.n - 89 + 4, row: 11 };
   return { column: element.group + 1, row: element.period + 1 };
@@ -85,12 +85,12 @@ function seriesMarker(family, row, range, symbols) {
 
 function renderGrid() {
   const html = [];
-  const main = stage.year === 8;
+  const main = stage.year === 8 && !stage.elements.some(e => mainGroup(e) === null);
   const intro = stage.year === 7;
   const periods = Math.max(...stage.elements.map(element => element.period));
   table.classList.toggle('entry-grid', intro);
   table.classList.toggle('main-group-grid', main);
-  table.classList.toggle('school-selection', !stage.all && !intro);
+  table.classList.toggle('school-selection', !stage.all && !intro && !stage.elements.some(e => e.family === 'lanthanide' || e.family === 'actinide'));
   table.style.setProperty('--school-periods', periods);
   if (!intro) {
     html.push(main ? '<span class="axis axis-corner" title="Hauptgruppe">HG</span>' : '<span class="axis axis-corner" title="Gruppennummer">Gr.</span>');
@@ -102,10 +102,13 @@ function renderGrid() {
     }
   }
   html.push(...stage.elements.map(tile));
-  if (stage.all) {
-    html.push(seriesMarker('lanthanide', 7, '57–71', 'La–Lu'), seriesMarker('actinide', 8, '89–103', 'Ac–Lr'));
-    html.push('<span class="series-label fam-lanthanide" style="grid-column:1/4;grid-row:10">Lanthanoide</span>', '<span class="series-label fam-actinide" style="grid-column:1/4;grid-row:11">Actinoide</span>', '<div class="table-feature" id="table-feature"></div>');
+  if (stage.elements.some(e => e.family === 'lanthanide')) {
+    html.push(seriesMarker('lanthanide', 7, '57–71', 'La–Lu'), '<span class="series-label fam-lanthanide" style="grid-column:1/4;grid-row:10">Lanthanoide</span>');
   }
+  if (stage.elements.some(e => e.family === 'actinide')) {
+    html.push(seriesMarker('actinide', 8, '89–103', 'Ac–Lr'), '<span class="series-label fam-actinide" style="grid-column:1/4;grid-row:11">Actinoide</span>');
+  }
+  if (stage.all) html.push('<div class="table-feature" id="table-feature"></div>');
   table.innerHTML = html.join('');
   table.classList.toggle('shows-measurement', Boolean(measurements[measure]));
   updateFeature();
