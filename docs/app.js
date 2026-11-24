@@ -1,3 +1,4 @@
+import { showResearch, showElementResearch } from './research.js';
 import { cellForStage } from './redox-cells.js';
 import { createPractice, practiceTool, practiceFocus, practiceCurriculum, practiceHelp } from './practice.js';
 import { redoxChoices, redoxStudy, redoxFocus, redoxCurriculum, redoxHelp, redoxSources, createRedoxPlayer } from './redox.js';
@@ -295,6 +296,7 @@ function updateCompounds() {
 
 const siteName = 'D[Ag] Table';
 const pageInfo = {
+  forschung: { title: 'Chemie aktuell', description: 'Entdecke neue wissenschaftliche Publikationen und aktuelle Themen der chemischen Forschung.', stats: [] },
   periodensystem: { title: siteName, description: 'Erkunde das Periodensystem und entdecke, in welchen Verbindungen dir die Elemente im Alltag begegnen.', stats: [['table', elements.length, 'Elemente'], ['columns', 18, 'Gruppen'], ['rows', 7, 'Perioden']] },
   redox: { title: 'Redox & Batterien', description: 'Verfolge beim Entladen den Weg der Elektronen vom Minuspol zum Pluspol.', stats: [] },
   ueben: { title: 'Üben', description: 'Löse eine Frage aus dem Unterricht oder erprobe deine Idee an einem Modell.', stats: [] },
@@ -307,6 +309,11 @@ function showPage(newPage) {
   const info = pageInfo[page];
   const isRedox = page === 'redox';
   const isPractice = page === 'ueben';
+  const isResearch = page === 'forschung';
+  document.body.classList.toggle('on-research', isResearch);
+  $('#research-section').hidden = !isResearch;
+  $('.school-picker').hidden = isResearch;
+  if (isResearch) showResearch($('#research-root'));
   document.body.classList.toggle('on-redox', isRedox);
   document.body.classList.toggle('on-practice', isPractice);
   if (!isPractice) practice.deactivate();
@@ -314,13 +321,13 @@ function showPage(newPage) {
   $('#redox-nav').hidden = !stage.redox;
   $('#redox-section').hidden = !isRedox;
   $('#practice-section').hidden = !isPractice;
-  $('#hero-stats').hidden = isRedox || isPractice;
+  $('#hero-stats').hidden = isRedox || isPractice || isResearch;
   const [topic, focus] = isPractice ? practiceFocus(stage) : isRedox ? redoxFocus(stage) : [stage.title, stage.focus];
   $('#school-topic').textContent = topic;
   $('#school-focus').textContent = focus;
   $('#school-curriculum').innerHTML = isPractice ? practiceCurriculum(stage) : isRedox ? redoxCurriculum(stage) : curriculumInfo(stage);
   $('#page-title').textContent = info.title;
-  $('#page-description').textContent = stage.all || isRedox || isPractice ? info.description : page === 'periodensystem'
+  $('#page-description').textContent = stage.all || isRedox || isPractice || isResearch ? info.description : page === 'periodensystem'
     ? 'Wähle ein Element und entdecke seine Eigenschaften und Verbindungen.'
     : 'Entdecke, wo diese Stoffe vorkommen, welche Elemente sie enthalten und wofür wir sie verwenden.';
   $('#hero-stats').setAttribute('aria-label', page === 'periodensystem' ? 'Aufbau des Periodensystems' : 'Umfang des Verbindungskatalogs');
@@ -345,7 +352,7 @@ function showPage(newPage) {
       $('#redox-study').innerHTML = '';
     }
     if (page === 'verbindungen') updateCompounds();
-    else if (!isPractice) updateElements();
+    else if (!isPractice && !isResearch) updateElements();
   }
   if (changed) window.scrollTo(0, 0);
 }
@@ -356,7 +363,7 @@ function readRoute() {
   try { parts = location.hash.slice(1).split('?')[0].split('/').map(decodeURIComponent); }
   catch { return { page: 'periodensystem' }; }
   if (parts[0] === 'redox' && !stage.redox) return { page: 'periodensystem' };
-  const newPage = ['verbindungen', 'redox', 'ueben'].includes(parts[0]) ? parts[0] : 'periodensystem';
+  const newPage = ['verbindungen', 'redox', 'ueben', 'forschung'].includes(parts[0]) ? parts[0] : 'periodensystem';
   const destination = { page: newPage };
   if (newPage === 'ueben') destination.tool = practiceTool(stage, new URLSearchParams(location.hash.split('?')[1] || '').get('werkzeug'));
   if (newPage === 'redox') {
@@ -438,7 +445,16 @@ function drawDialog() {
     dialogBody.innerHTML = `<h2 id="dialog-title">Außerhalb dieser Auswahl</h2><p>Dieser Steckbrief gehört zur Gesamtansicht. Du lernst gerade mit der Auswahl für ${escapeHtml(stage.label)}.</p><button type="button" class="soft-button" data-action="open-full">In der Gesamtansicht öffnen</button>`;
     return;
   }
-  if (kind === 'element') dialogBody.innerHTML = elementDetail(elementBySymbol.get(id), exampleLimit, stage);
+  if (kind === 'element') {
+    dialogBody.innerHTML = elementDetail(elementBySymbol.get(id), exampleLimit, stage);
+    if (stage.all) {
+      const research = document.createElement('section');
+      research.className = 'profile-section element-research';
+      research.hidden = true;
+      dialogBody.append(research);
+      showElementResearch(research, id);
+    }
+  }
   if (kind === 'verbindung') dialogBody.innerHTML = compoundDetail(stage.byFormula.get(id), stage);
   if (kind === 'lernhilfe') dialogBody.innerHTML = page === 'ueben' ? practiceHelp(stage, false) : page === 'redox' ? redoxHelp(stage) : helpDetail(stage);
   if (kind === 'quellen') dialogBody.innerHTML = page === 'ueben' ? practiceHelp(stage, true) : page === 'redox' ? redoxSources(cellForStage(stage, route.cell), stage) : sourcesDetail(stage);
@@ -470,7 +486,7 @@ function applyRoute() {
   if (route.page === 'redox') showRedoxCell();
   if (route.page === 'ueben') practice.activate(stage, route.tool);
   if (!route.kind) {
-    document.title = page === 'periodensystem' ? siteName : `${pageInfo[page].title} · ${siteName}`;
+    document.title = page === 'periodensystem' ? siteName + ' – Interaktives Periodensystem für Chemie' : `${pageInfo[page].title} · ${siteName}`;
     if (dialog.open) {
       dialog.close();
       document.body.classList.remove('dialog-open');
