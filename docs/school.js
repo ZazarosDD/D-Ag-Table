@@ -10,7 +10,15 @@ export function schoolStage(key) {
   if (!all && !level) throw new Error('Unbekannte Jahrgangsansicht');
   const year = all ? 0 : parseInt(key, 10);
   const course = key.split('-')[1] || '';
-  const symbols = new Set(all ? elements.map(e => e.symbol) : level.symbols);
+  // Retain elements from earlier years; LK also includes the corresponding GK selection.
+  const includedLevels = all ? [] : stageKeys.filter(stageKey => {
+    if (stageKey === 'alle') return false;
+    const stageYear = parseInt(stageKey, 10);
+    const stageCourse = stageKey.split('-')[1] || '';
+    return (stageYear < year || stageYear === year && (stageKey === key || course === 'lk' && stageCourse === 'gk'))
+      && (stageCourse !== 'lk' || course === 'lk');
+  });
+  const symbols = new Set(all ? elements.map(e => e.symbol) : includedLevels.flatMap(stageKey => schoolLevels[stageKey].symbols));
   const selected = all ? orderedCompounds : level.formulas.map(formula => {
     const compound = compoundByFormula.get(formula);
     return year <= 8 ? { ...compound, ...introductoryCompounds[formula] } : compound;
