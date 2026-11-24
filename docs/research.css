@@ -1,0 +1,22 @@
+.on-research .school-picker { display:none; }
+.research-intro { margin: 0 0 18px; }
+.research-intro h2 { margin: 0 0 8px; }
+.research-intro p { line-height: 1.55; }
+.research-status,.research-note { font-size:.86rem;color:#62596d;line-height:1.5; }
+.research-filters { display:flex; flex-wrap:wrap; gap:7px; margin:18px 0; }
+.research-filters button { padding:8px 13px; border:1px solid #ded5e9; border-radius:20px; background:#fff;color:#514363;font-weight:600; }
+.research-filters button[aria-pressed=true] { background:#614495;color:#fff;border-color:#614495; }
+.research-list { display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:12px; }
+.research-card { display:flex;flex-direction:column;gap:10px;min-width:0;padding:17px;border:1px solid #e0d8e8;border-radius:12px;background:#fff; }
+.research-meta { display:flex;flex-wrap:wrap;justify-content:space-between;gap:5px;font-size:.76rem;color:#64586e; }
+.research-card h3 { font-size:1rem;line-height:1.45;margin:0;overflow-wrap:anywhere; }
+.research-card h3 a { color:#39294c;text-decoration:none; }
+.research-card h3 a:hover { text-decoration:underline; }
+.research-tags { display:flex;flex-wrap:wrap;gap:5px;margin-top:auto; }
+.research-tags span { padding:3px 8px;background:#f0eaf7;color:#594374;border-radius:5px;font-size:.73rem; }
+.research-original { font-size:.82rem;color:#614495;font-weight:600;align-self:flex-start; }
+.element-research { margin-top:20px; }
+.element-research .research-card { padding:12px; }
+.research-compact { grid-template-columns:1fr; }
+.on-research .main-nav { flex-wrap:wrap; }
+@media(max-width:640px) { .research-card { padding:13px; } }
