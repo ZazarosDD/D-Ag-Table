@@ -40,6 +40,7 @@
   <link rel="stylesheet" href="school.css">
   <link rel="stylesheet" href="redox.css">
   <link rel="stylesheet" href="practice.css">
+  <link rel="stylesheet" href="research.css">
   <script type="module" src="app.js"></script>
 </head>
 <body>
@@ -55,6 +56,7 @@
         <a href="#verbindungen" data-page="verbindungen"><span data-icon="molecule"></span>Verbindungen</a>
         <a id="redox-nav" href="#redox" data-page="redox" aria-label="Redox und Batterien" hidden><span data-icon="battery"></span><span>Redox<span class="rx-nav-extra"> &amp; Batterien</span></span></a>
         <a href="#ueben" data-page="ueben"><span data-icon="book-open"></span>Üben</a>
+        <a href="#forschung" data-page="forschung">Chemie aktuell</a>
       </nav>
       <button type="button" class="help-button" data-action="help"><span data-icon="book"></span>Lernhilfe</button>
     </div>
@@ -143,6 +145,7 @@
       <div class="rx-choices" id="redox-choices" role="group" aria-labelledby="rx-select-title"></div>
       <article class="rx-study" id="redox-study" aria-labelledby="rx-cell-title"></article>
     </section>
+    <section id="research-section" class="collection" hidden aria-label="Chemie aktuell"><div id="research-root"></div></section>
     <section id="practice-section" class="collection" aria-label="Übungen zum Chemieunterricht" hidden><div id="practice-root"></div></section>
     <noscript>Bitte aktiviere JavaScript, um Elemente, Verbindungen und Übungen zu erkunden.</noscript>
   </main>
