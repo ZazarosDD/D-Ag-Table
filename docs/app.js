@@ -66,15 +66,17 @@ function gridPosition(element) {
   return { column: element.group + 1, row: element.period + 1 };
 }
 
+const focusElements = {"7":"H He C N O Na Mg Al Si S Cl Ca Fe Cu Zn Ag Au Sn","8":"H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Br Kr I Rb Cs Sr Ba Xe","9":"Li C O F Na Mg Al S Cl K Ca Fe Cu Zn Br Ag Cr Mn Co Ni","10":"H Li B C N O F Na Mg Al Si P S Cl Br I","11":"H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Cu Br","12-gk":"H Li C N O Na Mg Al P S Cl K Ca Fe Cu Zn Ag Pb","12-lk":"H Li C N O F Na Mg Al P S Cl K Ca Cr Mn Fe Co Ni Cu Zn Br Ag Pt Pb V","13-gk":"H C N O F Al Si P S Cl Ca Ti Fe Ni Cu Br","13-lk":"H B C N O F Na Mg Al Si P S Cl Ca Ti Fe Co Ni Cu Zn Br Zr Pd I Pt W"};
 function tile(element) {
   const position = gridPosition(element);
   const placement = stage.year === 7 ? '' : `grid-column:${position.column};grid-row:${position.row};`;
   const scale = measurements[measure];
   const value = scale ? measurementLabel(element, measure) : '';
   const reading = scale ? ` · ${scale.title}: ${value === '—' ? 'kein Tabellenwert' : value}` : '';
-  const label = `${element.name}, ${element.symbol}, Ordnungszahl ${element.n}${reading}`;
-  return `<button type="button" class="tile fam-${element.family}" data-element="${element.symbol}" style="${placement}${measurementStyle(element, measure)}" tabindex="-1" title="${label}" aria-label="${label}">
-    <span class="tile-number">${element.n}</span><span class="tile-symbol">${element.symbol}</span><span class="tile-name">${escapeHtml(element.name)}</span>${scale ? `<span class="tile-reading">${value}</span>` : ''}
+  const core = !stage.all && (focusElements[stage.key] || '').split(' ').includes(element.symbol);
+  const label = `${element.name}, ${element.symbol}, Ordnungszahl ${element.n}${reading}${core ? ' · Unterrichtsschwerpunkt' : ''}`;
+  return `<button type="button" class="tile fam-${element.family}${core ? ' stage-core' : ''}" data-element="${element.symbol}" style="${placement}${measurementStyle(element, measure)}" tabindex="-1" title="${label}" aria-label="${label}">
+    <span class="tile-number">${element.n}${core ? ' ·&#9733;' : ''}</span><span class="tile-symbol">${element.symbol}</span><span class="tile-name">${escapeHtml(element.name)}</span>${scale ? `<span class="tile-reading">${value}</span>` : ''}
   </button>`;
 }
 
@@ -137,6 +139,10 @@ function buildTable() {
     button.setAttribute('aria-pressed', button.dataset.course === lastCourse);
   }
   $('#element-heading').textContent = stage.year === 7 ? 'Elementkarten' : 'Elemente erkunden';
+  let focusKey = $('#stage-focus-key');
+  if (!focusKey) { focusKey = document.createElement('p'); focusKey.id = 'stage-focus-key'; focusKey.style.fontSize = '.85rem'; $('#table-scroll').before(focusKey); }
+  focusKey.hidden = stage.all;
+  focusKey.textContent = '★ Unterrichtsschwerpunkt · Weitere Elemente zum Entdecken und Wiederholen';
   $('#family-legend').hidden = stage.year === 7 || measure !== 'families';
   familySelect.closest('label').hidden = stage.year === 7;
   $('.measure-bar').hidden = !stage.en;
