@@ -65,39 +65,79 @@
 .mol-C { fill: #d5cbdc; }
 
 
-/* Group headings: preserve the existing row coordinates and family colours. */
+/* Group headings: aligned cards with a dedicated transition-metal band. */
 .periodic-table:not(.entry-grid) {
-  grid-template-rows: 65px repeat(7,var(--h)) 9px repeat(2,var(--h));
+  grid-template-rows: 102px repeat(7,var(--h)) 9px repeat(2,var(--h));
 }
 .school-selection.periodic-table {
-  grid-template-rows: 65px repeat(var(--school-periods),var(--h));
+  grid-template-rows: 102px repeat(var(--school-periods),var(--h));
 }
 .periodic-table .group-heading {
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: flex-end;
   align-self: stretch;
-  gap: 4px;
-  padding-bottom: 3px;
   min-width: 0;
+  box-sizing: border-box;
 }
+.periodic-table .main-heading {
+  gap: 5px;
+  padding: 8px 2px 5px;
+  border: 1px solid var(--edge,#dcd3e6);
+  border-top: 3px solid var(--swatch,#a99abd);
+  border-radius: 8px;
+  background: color-mix(in srgb,var(--fill,#eee8f5) 60%,white);
+  color: var(--tone,#514363);
+}
+.group-roman { font-size: .82rem; font-weight: 750; }
 .group-name {
-  font-size: .66rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  font-size: .72rem;
   line-height: 1.12;
   font-weight: 650;
   overflow-wrap: anywhere;
   hyphens: manual;
-  color: #514b60;
 }
-.group-number { font-size: .68rem; white-space: nowrap; }
+.group-number {
+  display: grid;
+  place-items: center;
+  min-width: 24px;
+  min-height: 20px;
+  padding-inline: 3px;
+  border-radius: 5px;
+  background: #ffffffb5;
+  font-size: .7rem;
+  font-weight: 600;
+}
+.transition-heading .group-number {
+  width: 100%;
+  height: 24px;
+  background: #f0f5fc;
+  color: #314d78;
+  border: 1px solid #d6e2f2;
+}
 .periodic-table .subgroup-heading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
   align-self: start;
   justify-self: stretch;
-  padding: 6px 4px;
-  border-bottom: 1px solid #d5d0dc;
-  font-size: .78rem;
-  font-weight: 600;
-  color: #514b60;
+  height: 66px;
+  box-sizing: border-box;
+  border: 1px solid var(--edge);
+  border-top: 3px solid var(--swatch);
+  border-radius: 8px;
+  background: color-mix(in srgb,var(--fill) 60%,white);
+  color: var(--tone);
   pointer-events: none;
 }
-.periodic-table:not(.entry-grid):not(.main-group-grid) { min-width: 1140px; }
+.subgroup-heading strong { font-size: .91rem; font-weight: 700; }
+.subgroup-heading span { font-size: .72rem; font-weight: 500; }
+.periodic-table:not(.entry-grid):not(.main-group-grid) { min-width: 1240px; }
