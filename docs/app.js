@@ -1,4 +1,4 @@
-import { showDetective } from './detective.js';
+// Load the detective module only when its page is opened, so it cannot block the rest of the site.
 import { showResearch, showElementResearch } from './research.js';
 import { cellForStage } from './redox-cells.js';
 import { createPractice, practiceTool, practiceFocus, practiceCurriculum, practiceHelp } from './practice.js';
@@ -315,7 +315,19 @@ function showPage(newPage) {
   const isDetective = page === 'detektive';
   document.body.classList.toggle('on-detective', isDetective);
   $('#detective-section').hidden = !isDetective;
-  if (isDetective) showDetective($('#detective-root'),stage);
+  if (isDetective) {
+    const root = $('#detective-root');
+    const currentStage = stage;
+    root.textContent = 'Ermittlungsakte wird geladen …';
+    import('./detective.js?v=2').then(({showDetective}) => {
+      if (page === 'detektive' && stage === currentStage) showDetective(root, currentStage);
+    }).catch(error => {
+      console.error('Chemiedetektive:', error);
+      if (page === 'detektive' && stage === currentStage) {
+        root.textContent = 'Die Ermittlungsakte konnte nicht geladen werden. Bitte lade die Seite neu.';
+      }
+    });
+  }
   document.body.classList.toggle('on-research', isResearch);
   $('#research-section').hidden = !isResearch;
   $('.school-picker').hidden = isResearch;
@@ -343,7 +355,7 @@ function showPage(newPage) {
   $('#compound-section').hidden = page !== 'verbindungen';
   $('.brand').setAttribute('href', hashFor({ page: 'periodensystem' }));
   for (const link of document.querySelectorAll('.main-nav a')) {
-    link.setAttribute('href', hashFor({ page: link.dataset.page }));
+    link.setAttribute('href', hashFor({ page: link.dataset.page }, link.dataset.page === 'detektive' ? '8' : stage.key));
     if (link.dataset.page === page) link.setAttribute('aria-current', 'page');
     else link.removeAttribute('aria-current');
   }
@@ -595,7 +607,10 @@ document.addEventListener('click', event => {
     if (nextPage === 'redox' && !stage.redox) { event.preventDefault(); return; }
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
-    navigate({ page: nextPage, tool: button.dataset.tool });
+    if (nextPage === 'detektive' && stage.key !== '8') {
+      history.pushState(sessionEntry(0), '', hashFor({ page: 'detektive' }, '8'));
+      applyRoute();
+    } else navigate({ page: nextPage, tool: button.dataset.tool });
   } else if (element) {
     navigate({ page, kind: 'element', id: element }, button);
     if (section) jumpToSection(section);
