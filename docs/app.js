@@ -1,3 +1,4 @@
+import { showDetective } from './detective.js';
 import { showResearch, showElementResearch } from './research.js';
 import { cellForStage } from './redox-cells.js';
 import { createPractice, practiceTool, practiceFocus, practiceCurriculum, practiceHelp } from './practice.js';
@@ -296,6 +297,7 @@ function updateCompounds() {
 
 const siteName = 'D[Ag] Table';
 const pageInfo = {
+  detektive: { title: 'Chemiedetektive', description: 'Wertet Indizien aus, untersucht das Periodensystem und löst einen chemischen Ermittlungsfall.', stats: [] },
   forschung: { title: 'Chemie aktuell', description: 'Entdecke neue wissenschaftliche Publikationen und aktuelle Themen der chemischen Forschung.', stats: [] },
   periodensystem: { title: siteName, description: 'Erkunde das Periodensystem und entdecke, in welchen Verbindungen dir die Elemente im Alltag begegnen.', stats: [['table', elements.length, 'Elemente'], ['columns', 18, 'Gruppen'], ['rows', 7, 'Perioden']] },
   redox: { title: 'Redox & Batterien', description: 'Verfolge beim Entladen den Weg der Elektronen vom Minuspol zum Pluspol.', stats: [] },
@@ -310,6 +312,10 @@ function showPage(newPage) {
   const isRedox = page === 'redox';
   const isPractice = page === 'ueben';
   const isResearch = page === 'forschung';
+  const isDetective = page === 'detektive';
+  document.body.classList.toggle('on-detective', isDetective);
+  $('#detective-section').hidden = !isDetective;
+  if (isDetective) showDetective($('#detective-root'),stage);
   document.body.classList.toggle('on-research', isResearch);
   $('#research-section').hidden = !isResearch;
   $('.school-picker').hidden = isResearch;
@@ -321,13 +327,13 @@ function showPage(newPage) {
   $('#redox-nav').hidden = !stage.redox;
   $('#redox-section').hidden = !isRedox;
   $('#practice-section').hidden = !isPractice;
-  $('#hero-stats').hidden = isRedox || isPractice || isResearch;
+  $('#hero-stats').hidden = isRedox || isPractice || isResearch || isDetective;
   const [topic, focus] = isPractice ? practiceFocus(stage) : isRedox ? redoxFocus(stage) : [stage.title, stage.focus];
   $('#school-topic').textContent = topic;
   $('#school-focus').textContent = focus;
   $('#school-curriculum').innerHTML = isPractice ? practiceCurriculum(stage) : isRedox ? redoxCurriculum(stage) : curriculumInfo(stage);
   $('#page-title').textContent = info.title;
-  $('#page-description').textContent = stage.all || isRedox || isPractice || isResearch ? info.description : page === 'periodensystem'
+  $('#page-description').textContent = stage.all || isRedox || isPractice || isResearch || isDetective ? info.description : page === 'periodensystem'
     ? 'Wähle ein Element und entdecke seine Eigenschaften und Verbindungen.'
     : 'Entdecke, wo diese Stoffe vorkommen, welche Elemente sie enthalten und wofür wir sie verwenden.';
   $('#hero-stats').setAttribute('aria-label', page === 'periodensystem' ? 'Aufbau des Periodensystems' : 'Umfang des Verbindungskatalogs');
@@ -352,7 +358,7 @@ function showPage(newPage) {
       $('#redox-study').innerHTML = '';
     }
     if (page === 'verbindungen') updateCompounds();
-    else if (!isPractice && !isResearch) updateElements();
+    else if (!isPractice && !isResearch && !isDetective) updateElements();
   }
   if (changed) window.scrollTo(0, 0);
 }
@@ -363,7 +369,7 @@ function readRoute() {
   try { parts = location.hash.slice(1).split('?')[0].split('/').map(decodeURIComponent); }
   catch { return { page: 'periodensystem' }; }
   if (parts[0] === 'redox' && !stage.redox) return { page: 'periodensystem' };
-  const newPage = ['verbindungen', 'redox', 'ueben', 'forschung'].includes(parts[0]) ? parts[0] : 'periodensystem';
+  const newPage = ['verbindungen', 'redox', 'ueben', 'forschung', 'detektive'].includes(parts[0]) ? parts[0] : 'periodensystem';
   const destination = { page: newPage };
   if (newPage === 'ueben') destination.tool = practiceTool(stage, new URLSearchParams(location.hash.split('?')[1] || '').get('werkzeug'));
   if (newPage === 'redox') {
