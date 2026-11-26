@@ -319,7 +319,7 @@ function showPage(newPage) {
     const root = $('#detective-root');
     const currentStage = stage;
     root.textContent = 'Ermittlungsakte wird geladen …';
-    import('./detective.js?v=2').then(({showDetective}) => {
+    import('./detective.js?v=3').then(({showDetective}) => {
       if (page === 'detektive' && stage === currentStage) showDetective(root, currentStage);
     }).catch(error => {
       console.error('Chemiedetektive:', error);
